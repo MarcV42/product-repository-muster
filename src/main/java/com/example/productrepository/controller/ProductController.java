@@ -2,14 +2,13 @@ package com.example.productrepository.controller;
 
 import com.example.productrepository.models.NewProduct;
 import com.example.productrepository.models.Product;
-import com.example.productrepository.repository.ProductRepository;
-import com.example.productrepository.ProductService;
+import com.example.productrepository.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/product")
+@RequestMapping("/api/product")
 public class ProductController {
     private final ProductService productService;
 
@@ -26,6 +25,8 @@ public class ProductController {
 
     @PostMapping
     public Product addProduct(@RequestBody NewProduct newProduct){
+
+        System.out.println("Du hast was gepostet");
         return productService.addProduct(newProduct);
     }
 
