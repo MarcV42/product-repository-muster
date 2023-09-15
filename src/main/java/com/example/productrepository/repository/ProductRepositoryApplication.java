@@ -1,4 +1,4 @@
-package com.example.productrepository;
+package com.example.productrepository.repository;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
