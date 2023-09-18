@@ -21,9 +21,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-
+// Random ID wird generiert und zu Product unter ziehen von newProduct hinzugefügt (hier & in ProductController Klasse)
     public Product addProduct(NewProduct newProduct) {
-
+// hier wird neues Product zusammengesetzt
         Product product = new Product(
                 UUID.randomUUID().toString(),
                 newProduct.title(),

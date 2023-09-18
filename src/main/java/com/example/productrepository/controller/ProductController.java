@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-
+//Mittelstück/Businesslogik ...hier connection zu Controller richtung frontend
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
