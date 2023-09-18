@@ -8,20 +8,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProductServiceTest {
 
     ProductRepository productRepository = mock(ProductRepository.class);
-    ProductService productService = new ProductService(productRepository);
+    IdService idService = mock(IdService.class);
+    ProductService productService = new ProductService(productRepository, idService);
 
-
+    //is working
     @Test
     void findAllProducts() {
         //GIVEN
@@ -40,6 +38,8 @@ class ProductServiceTest {
         assertEquals(expected, actual);
     }
 
+
+    //is working
     @Test
     void addProduct() {
         //GIVEN
@@ -47,14 +47,42 @@ class ProductServiceTest {
         NewProduct newProduct = new NewProduct("product1", 30);
         Product savedProduct = new Product("123", "product1", 30);
 
-        when(productRepository.save(savedProduct)).thenReturn(savedProduct);
+        when(idService.randomId()).thenReturn("123");
+        when(productRepository.save(any(Product.class))).thenReturn(savedProduct);
 
         //WHEN
         Product actual = productService.addProduct(newProduct);
 
         //THEN
         Product expected = new Product("123", "product1", 30);
-        verify(productRepository).save(savedProduct);
+        verify(productRepository).save(argThat(product ->
+                product.title().equals("product1") && product.price() == 30));
         assertEquals(expected, actual);
     }
+
+    @Test
+    void testFindAllProducts() {
+    }
+
+
+    //is working
+    @Test
+    void findProductById() {
+
+            //GIVEN
+            Product p1 = new Product("5", "Banane", 50);
+
+            String id = p1.id();
+
+            when(productRepository.findById(id)).thenReturn(Optional.of(p1));
+
+            //WHEN
+            Optional<Product> actual = productService.findProductById("5");
+
+            //THEN
+            Optional<Product> expected = Optional.of(new Product("5", "Banane", 50));
+            verify(productRepository).findById("5");
+            assertEquals(expected,actual);
+
+        }
 }
